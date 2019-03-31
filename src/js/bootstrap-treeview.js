@@ -1441,26 +1441,17 @@
 		if (node instanceof Array) {
 			node = node[0];
 		}
-
 		options = $.extend({}, _default.options, options);
-
 		// insert new node
-		var targetNodes;
-		var parentNode = this._nodes[node.parentId];
-		if (parentNode) {
-			targetNodes = parentNode.nodes;
-		} else {
-			targetNodes = this._tree;
-		}
-		targetNodes.splice(node.index, 1, newNode);
-
+		$.extend(node, newNode);
 		// remove old node from DOM
-		this._removeNodeEl(node);
-
+		//this._removeNodeEl(node);
 		// initialize new state and render changes
-		this._setInitialStates({nodes: this._tree}, 0)
+		this._setInitialStates({ nodes: this._tree }, 0)
 			.done(this._render.bind(this));
 	};
+
+
 
 
 	/**
