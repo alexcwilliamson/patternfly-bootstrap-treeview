@@ -144,7 +144,8 @@
 			addNodeAfter: $.proxy(this.addNodeAfter, this),
 			addNodeBefore: $.proxy(this.addNodeBefore, this),
 			removeNode: $.proxy(this.removeNode, this),
-			updateNode: $.proxy(this.updateNode, this),
+            updateNode: $.proxy(this.updateNode, this),
+            updateNodes: $.proxy(this.updateNodes, this),
 
 			// Select methods
 			selectNode: $.proxy(this.selectNode, this),
@@ -1449,7 +1450,39 @@
 		// initialize new state and render changes
 		this._setInitialStates({ nodes: this._tree }, 0)
 			.done(this._render.bind(this));
-	};
+    };
+
+
+    /**
+     *   Updates a collection of tree nodes
+     * @param {any} nodeUpdateCollection
+     * @param {any} options
+     */
+
+    Tree.prototype.updateNodes = function (nodeUpdateCollection, options) {
+      
+        options = $.extend({}, _default.options, options);
+
+        for (var i = 0; i < nodeUpdateCollection.length; i++) {
+
+            var nodeUpdateItem = nodeUpdateCollection[i];
+
+            if (nodeUpdateItem.node instanceof Array) {
+                nodeUpdateItem.node = nodeUpdateItem.node[0];
+            }
+              // insert new node
+            $.extend(nodeUpdateItem.node, nodeUpdateItem.newNode);
+        }
+      
+        // remove old node from DOM
+        //this._removeNodeEl(node);
+        // initialize new state and render changes
+        this._setInitialStates({ nodes: this._tree }, 0)
+            .done(this._render.bind(this));
+    };
+
+
+
 
 
 
